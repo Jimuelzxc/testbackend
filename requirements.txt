@@ -1,0 +1,7 @@
+rembg
+fastapi
+uvicorn
+Pillow
+Jinja2
+onnxruntime
+python-multipart
