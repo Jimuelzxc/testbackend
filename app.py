@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile
+from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import FileResponse
 from rembg import remove
 from PIL import Image
@@ -11,16 +11,16 @@ app = FastAPI()
 # Check if the port environment variable is set, otherwise default to 8000
 port = int(os.environ.get("PORT", 8000))
 
-# Test endpoint
-@app.get("/test")
+# Root endpoint
+@app.get("/")
 async def root():
-    return {"message": "This is a test endpoint"}
+    return {"message": "Background removal service is running"}
 
 # Endpoint to remove the background of an uploaded image
 @app.post("/remove_background")
-async def remove_background_endpoint(image_file: UploadFile):
+async def remove_background_endpoint(file: UploadFile = File(...)):
     # Read the image file content
-    image_content = await image_file.read()
+    image_content = await file.read()
 
     # Open the image using Pillow
     input_image = Image.open(io.BytesIO(image_content))
